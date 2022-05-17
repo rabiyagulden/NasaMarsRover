@@ -14,16 +14,16 @@ namespace MarsRoverProject.Core
             switch (d)
             {
                 case "W":
-                    rover = new WState(position);
+                    rover = new WState(position,direction);
                     break;
                 case "S":
-                    rover = new SState(position);
+                    rover = new SState(position,direction);
                     break;
                 case "N":
-                    rover = new NState(position);
+                    rover = new NState(position,direction);
                     break;
                 case "E":
-                    rover = new EState(position);
+                    rover = new EState(position,direction);
                     break;
 
             }

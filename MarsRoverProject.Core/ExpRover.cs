@@ -1,80 +1,47 @@
 ﻿using System;
 namespace MarsRoverProject.Core
 {
-    public class ExpRover
+    public class ExpRover :Rover
     {
-        public int x;
-        public int y;
+       
+        public Position Coords;
         public string direction;
-        public Position position;
 
-       // private Rover roverState;
-      //  DirectionFactory factory = new DirectionFactory();
-
-        public OrientationsEnum RoverOrientation { get; set; }
-
- 
+        private Rover roverState;
+        DirectionFactory factory = new DirectionFactory();
+       // public OrientationsEnum RoverOrientation { get; set; }
 
 
-        public ExpRover(string location)
-        {
-        
-            Int32.TryParse(location.Split(" ")[0],out x);
-            Int32.TryParse(location.Split(" ")[1], out y);
+        public ExpRover(Position Coords,string direction): base(Coords,direction) {
 
-            position.X = x;
-            position.Y = y;
-
-            direction = location.Split(" ")[2];
-
-            RoverOrientation = Enum.Parse<OrientationsEnum>(direction);
-
-           
-
-            //roverState.direction = direction;
-            //roverState.RoverOrientation = RoverOrientation;
-            
-
-          
+            this.Coords = Coords;
+            this.direction = direction;
         }
-
-        public void TurnLeft() {
-
-
-
-            RoverOrientation = (RoverOrientation - 1) < OrientationsEnum.N ? OrientationsEnum.W : RoverOrientation - 1;
-            direction = ((OrientationsEnum)RoverOrientation).ToString();
-
-        }
-        public void TurnRight()
+     
+        public void GetCoorddinates(string location)
         {
-            RoverOrientation = (RoverOrientation + 1) > OrientationsEnum.W ? OrientationsEnum.N : RoverOrientation + 1;
-            direction = ((OrientationsEnum)RoverOrientation).ToString();
-        }
-
-        public void MoveF()
-        {
-
-         //   factory.Create(direction);
+                 
+            // roverState.direction = direction;
+            // roverState.RoverOrientation = RoverOrientation;
         }
 
         public void Move()
         {
-            if (direction == "N")
-            {             
-                position.Y++;
-            }
-            if (direction == "S")
+            if (RoverDirection == "N")
             {
-                position.Y--;
+                Coords.Y++;
             }
-            if (direction == "W")
+            if (RoverDirection == "S")
             {
-                position.X--;
+                Coords.Y--;
             }
-            if (direction == "E")
+            if (RoverDirection == "W")
             {
-                position.X++;
+                Coords.X--;
+            }
+            if (RoverDirection == "E")
+            {
+                Coords.X++;
             }
 
         }
@@ -101,10 +68,14 @@ namespace MarsRoverProject.Core
 
                 }
             }
+
+          
         }
 
-
-     
-
+        public override void MoveForward()
+        {
+           
+            factory.Create(RoverDirection);
+        }
     }
 }
