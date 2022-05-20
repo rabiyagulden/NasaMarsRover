@@ -7,20 +7,24 @@ namespace MarsRoverProject.Tests
     public class UnitTest1
     {
         public string TestInputString;
+        public string TestPlateauSize="5 5";
         int x; int y;
+        Plateau plateau = new Plateau();
+        
         [Fact]
         public void TurnLeft()
         {
+             TestInputString = "1 2 N";
 
-            TestInputString = "1 2 N";
+   
 
             Int32.TryParse(TestInputString.Split(" ")[0], out x);
             Int32.TryParse(TestInputString.Split(" ")[1], out y);
            string directionTest = TestInputString.Split(" ")[2];
             Position coordinates = new Position(x, y);
 
-            ExpRover rover = new ExpRover(coordinates,directionTest);
-
+            ExpRover rover = new ExpRover(coordinates,directionTest, plateau);
+            rover.SetPlateauSurfaceSize(TestPlateauSize);
             rover.TurnLeft();     
 
             Assert.Equal("W",rover.RoverDirection);
@@ -35,8 +39,9 @@ namespace MarsRoverProject.Tests
             string directionTest = TestInputString.Split(" ")[2];
             Position coordinates = new Position(x, y);
 
-            ExpRover rover = new ExpRover(coordinates, directionTest);
-           // ExpRover rover = new ExpRover("1 2 N");
+            ExpRover rover = new ExpRover(coordinates, directionTest, plateau);
+            rover.SetPlateauSurfaceSize(TestPlateauSize);
+            // ExpRover rover = new ExpRover("1 2 N");
 
             rover.TurnRight();
 
@@ -52,7 +57,8 @@ namespace MarsRoverProject.Tests
             string directionTest = TestInputString.Split(" ")[2];
             Position coordinates = new Position(x, y);
 
-            ExpRover rover = new ExpRover(coordinates, directionTest);
+            ExpRover rover = new ExpRover(coordinates, directionTest, plateau);
+            rover.SetPlateauSurfaceSize(TestPlateauSize);
 
             rover.Execute("LMLMLMLMM");
             
@@ -68,7 +74,8 @@ namespace MarsRoverProject.Tests
             string directionTest = TestInputString.Split(" ")[2];
             Position coordinates = new Position(x, y);
 
-            ExpRover rover = new ExpRover(coordinates, directionTest);
+            ExpRover rover = new ExpRover(coordinates, directionTest, plateau);
+            rover.SetPlateauSurfaceSize(TestPlateauSize);
 
             rover.Execute("MMRMMRMRRM");
 

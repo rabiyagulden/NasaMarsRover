@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <None Remove="Enums\" />
-    <None Remove="States\" />
+    <None Remove="Entities\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
-    <Folder Include="States\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 </Project>

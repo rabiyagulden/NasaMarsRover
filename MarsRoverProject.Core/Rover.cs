@@ -6,15 +6,17 @@ namespace MarsRoverProject.Core
         public Position Coordinates { get; set; }
         public OrientationsEnum RoverOrientation { get; set; }
         public string RoverDirection;
+        public Plateau PlateauArea;
 
-        public Rover(Position Coordinates,string direction)
+        public Rover(Position coordinates,string direction,Plateau plateau)
         {
             this.RoverDirection = direction;
             this.Coordinates = Coordinates;
+            this.PlateauArea = plateau;
 
             RoverOrientation = Enum.Parse<OrientationsEnum>(RoverDirection);
         }
-        public abstract void MoveForward();
+       // public abstract void MoveForward();
         public void TurnRight()
         {
             RoverOrientation = (RoverOrientation + 1) > OrientationsEnum.W ? OrientationsEnum.N : RoverOrientation + 1;
