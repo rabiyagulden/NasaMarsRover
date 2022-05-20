@@ -6,24 +6,25 @@ namespace MarsRoverProject.Core
        
         public Position Coords;
         public string direction;
+        public PlateauSize pSize;
+        public Plateau plateau;
 
-        private Rover roverState;
-        DirectionFactory factory = new DirectionFactory();
+      
+     
        // public OrientationsEnum RoverOrientation { get; set; }
 
 
-        public ExpRover(Position Coords,string direction): base(Coords,direction) {
+        public ExpRover(Position Coords,string direction,Plateau plateau): base(Coords,direction,plateau) {
 
             this.Coords = Coords;
             this.direction = direction;
+            this.plateau = plateau;
+            this.pSize = plateau.GetSize();
+       
+       
+             
         }
-     
-        public void GetCoorddinates(string location)
-        {
-                 
-            // roverState.direction = direction;
-            // roverState.RoverOrientation = RoverOrientation;
-        }
+    
 
         public void Move()
         {
@@ -53,29 +54,62 @@ namespace MarsRoverProject.Core
 
             foreach (int element in inputs)
             {
-                switch (element)
+                if (plateau.IsValid(Coords))
                 {
-                    case 'L':
-                        TurnLeft();              
-                        break;
-                    case 'R':
-                       TurnRight();
-                        break;
-                    case 'M':
-                        Move();
-                        break;
-                    default: throw new Exception();
+                    switch (element)
+                    {
+                        case 'L':
+                            TurnLeft();
+                            break;
+                        case 'R':
+                            TurnRight();
+                            break;
+                        case 'M':
+                            Move();
+                            break;
+                        default: throw new Exception();
+
+                    }
 
                 }
+
+                
             }
 
           
         }
+  
 
-        public override void MoveForward()
+        public void SetPlateauSurfaceSize(string toSize)
         {
-           
-            factory.Create(RoverDirection);
+            var sizeArguments = toSize.Split(' ');
+            var width = int.Parse(sizeArguments[0]);
+            var height = int.Parse(sizeArguments[1]);
+
+            pSize = new PlateauSize(width, height);
+            plateau.SetSize(pSize);   
+         
+        }
+
+  
+
+        public void Deploy(Plateau p, Position aPoint)
+        {
+            if (p.IsValid(aPoint))
+            {
+                Coords = aPoint;
+                return;
+            }
+
+            throwDeployException(p, aPoint);
+        }
+
+        private static void throwDeployException(Plateau plateau, Position point)
+        {
+            var size = plateau.GetSize();
+            var exceptionMessage = String.Format("Deploy failed for point ({0},{1}). Landing surface size is {2} x {3}.",
+                point.X, point.Y, size.PlateauWidth, size.PlateauHeight);
+            throw new Exception(exceptionMessage);
         }
     }
 }
